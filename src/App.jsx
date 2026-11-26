@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { fetchPosts } from "./api/postsApi";
+import { fetchPosts, createPost } from "./api/postsApi";
 import PostFilters from "./components/PostFilters.jsx";
 import PostList from "./components/PostList.jsx";
+import Modal from "./components/Modal.jsx";
 import "./App.css";
+import PostForm from "./components/PostForm.jsx";
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPostModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,6 +61,28 @@ function App() {
     }
   }
 
+  const handleAddPost = async (newPostData) => {
+    const createdPost = await createPost({
+      title: newPostData.title,
+      body: newPostData.body,
+      existingPosts: posts,
+      userId: 11,
+    });
+
+    setPosts((prevPosts) => [createdPost, ...prevPosts]);
+    return createdPost;
+  };
+
+  const handleShowPostForm = () => {
+    console.log(showPostModal);
+
+    if (!showPostModal) setShowModal(true);
+  };
+
+  const handleClosePostForm = () => {
+    setShowModal(false);
+  };
+
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredPosts = normalizedQuery
@@ -86,35 +111,59 @@ function App() {
 
   if (!isLoading && !error) {
     mainContent = (
-      <section>
-        <PostFilters
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          disabled={isLoading || Boolean(error)}
-        />
-        <p>
-          Post caricati: {filteredPosts.length}
-          {normalizedQuery ? ` su ${posts.length}` : ""}
-        </p>
-        <PostList
-          posts={filteredPosts}
-          hasActiveSearch={Boolean(normalizedQuery)}
-          onClearSearch={() => setSearchQuery("")}
-        />
+      <section className="main-body">
+        <div className="post-filter-content">
+          <div>
+            <PostFilters
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              disabled={isLoading || Boolean(error)}
+            />
+            <p className="loaded-posts">
+              Post caricati: {filteredPosts.length}
+              {normalizedQuery ? ` su ${posts.length}` : ""}
+            </p>
+          </div>
+
+          <div className="post-add-button">
+            <button onClick={handleShowPostForm}>Aggiungi Post</button>
+          </div>
+        </div>
+        <div className="post-list-content">
+          <PostList
+            posts={filteredPosts}
+            hasActiveSearch={Boolean(normalizedQuery)}
+            onClearSearch={() => setSearchQuery("")}
+          />
+        </div>
       </section>
     );
   }
 
   return (
     <>
-      <header className="main-header">
-        <h2>Posts:</h2>
-        <p>Esplora i nostri contenuti</p>
+      <header>
+        <div className="main-header">
+          <h1>Esplora i nostri contenuti</h1>
+        </div>
       </header>
 
       <main>
         {mainContent}
-        <section></section>
+        <Modal
+          isOpen={showPostModal}
+          onClose={handleClosePostForm}
+          titleId="post-form-title"
+        >
+          <PostForm
+            titleId="post-form-title"
+            onAddPost={async (data) => {
+              const created = await handleAddPost(data);
+              handleClosePostForm();
+              return created;
+            }}
+          />
+        </Modal>
       </main>
     </>
   );

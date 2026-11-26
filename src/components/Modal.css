@@ -26,8 +26,9 @@
 
 .modal-content {
   position: relative;
+  display: block;
   width: 100%;
-  min-height: calc(40vh);
+  min-height: calc(45vh);
 }
 
 .modal-close {

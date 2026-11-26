@@ -1,0 +1,36 @@
+ul.post-list {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 6px;
+  list-style-type: none;
+  padding: 0;
+}
+
+@media screen and (min-width: 476px) {
+    ul.post-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 900px) {
+    ul.post-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+ul.post-list li.post-card {
+    border-radius: 12px;
+    border: 1px solid var(--accent-border);
+    padding: 12px;
+}
+
+.post-card h3 {
+    text-transform: capitalize;
+    min-height: 80px;
+}
+
+.post-card p {
+    text-align: left;
+    min-height: 100px;
+}
+

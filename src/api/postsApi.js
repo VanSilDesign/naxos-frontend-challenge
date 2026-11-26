@@ -30,28 +30,32 @@ export async function createPost({
   userId = 11,
   existingPosts = [],
 }) {
+  const trimmedTitle = title.trim();
+  const trimmedBody = body.trim();
+
   const response = await fetch(BASE_URL, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: JSON.stringify({
-      title: title.trim(),
-      body: body.trim(),
+      title: trimmedTitle,
+      body: trimmedBody,
       userId,
     }),
   });
-  
+
   if (!response.ok) {
     throw new Error(
       `Errore durante la pubblicazione del post (HTTP status: ${response.status})`,
     );
   }
 
-  const createdPost = response.json();
-  const lastIdPost = existingPosts.reduce((max, post) =>
-    Math.max(max, Number(post.id) || 0, 100),
-  ); /* Cerco il massimo id tra i post */
+  const createdPost = await response.json();
+  const lastIdPost = existingPosts.reduce(
+    (max, post) => Math.max(max, Number(post.id) || 0),
+    100,
+  );
 
   return {
     ...createdPost,

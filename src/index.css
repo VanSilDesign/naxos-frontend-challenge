@@ -1,18 +1,24 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
+  --text: #2a172d;
+  --text-h: #241427;
+  --text-b: #f2e9e5;
+  --bg: #f2e9e5;
+  --border: #f2e9e5;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
+  --accent-second: #a8f0d1;
+  --accent-second-bg: rgba(168, 240, 209, 0.15);
+  --accent-second-border: rgba(168, 240, 209, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
+  --error: #bb0303;
+  --error-bg: #bb030327;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -32,14 +38,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
+    --text: #ddd4d0;
+    /* --text-h: f3f4f6; */
+    --text-h: #f2e9e5;
+    --text-b: #241427;
+    /* --bg: 16171d; */
+    --bg: #241427;
+    --form-bg: rgb(36, 20, 39, 0.15);
+    --border: #322b33;
+    --code-bg: #1f1b20;
     --accent: #c084fc;
     --accent-bg: rgba(192, 132, 252, 0.15);
     --accent-border: rgba(192, 132, 252, 0.5);
+    --accent-second: #a8f0d1;
+    --accent-second-bg: rgba(168, 240, 209, 0.15);
+    --accent-second-border: rgba(168, 240, 209, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -48,6 +61,9 @@
   #social .button-icon {
     filter: invert(1) brightness(2);
   }
+}
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -108,4 +124,45 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+input {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 36px;
+  border-radius: 6px;
+  outline: none;
+  background-color: var(--form-bg);
+}
+
+button {
+  cursor: pointer;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 0 6px;
+  background-color: var(--accent-second-bg);
+  border: 2px solid var(--accent-second-border);
+}
+
+button:hover {
+  color: var(--text-b);
+  background-color: var(--accent-second);
+}
+
+.input-clear-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  border: none;
+  background-color: var(--form-bg);
+}
+
+.input-clear-button:hover {
+  color: var(--text-h);
+  background-color: var(--form-bg);
 }
