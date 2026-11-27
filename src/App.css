@@ -11,10 +11,13 @@ header {
 }
 
 main {
+  min-height: 50vh;
+}
+
+.main-body {
   display: flex;
   flex-flow: column;
   justify-content: center;
-  min-height: 50vh;
 }
 
 .post-list-content {
@@ -28,7 +31,7 @@ main {
 .post-add-button {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .loaded-posts {
@@ -40,6 +43,7 @@ main {
   margin-top: 24px;
 }
 
+.empty-state p,
 .error-block p {
   margin-bottom: 12px;
 }
