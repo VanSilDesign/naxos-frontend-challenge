@@ -7,7 +7,7 @@ export default function PostFilter({
 }) {
   return (
     <div className="post-filter">
-      <label htmlFor="post-search" className="post-search-label">
+      <label htmlFor="post-search" className="post-search-label sr-only">
         Cerca post per titolo o contenuto
       </label>
       <div className="post-filter-form">

@@ -1,51 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./Modal.css";
 
 export default function Modal({ isOpen, onClose, titleId, children }) {
+  const dialogRef = useRef(null);
+
   useEffect(() => {
-    if (!isOpen) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-    function handleKeyDown(event) {
-      if (event.key === "Escape") {
-        onClose();
-      }
+    if (isOpen && !dialog.open) {
+      dialog.showModal();
+    } else if (!isOpen && dialog.open) {
+      dialog.close();
     }
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [isOpen]);
 
   function handleBackdropClick(event) {
-    if (event.target === event.currentTarget) {
+    if (event.target === dialogRef.current) {
       onClose();
     }
   }
 
   return (
-    <div
-      className="modal-backdrop"
+    <dialog
+      ref={dialogRef}
+      className="modal-dialog"
+      aria-labelledby={titleId}
+      onClose={onClose}
       onClick={handleBackdropClick}
-      role="presentation"
     >
-      <div
-        className="modal-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
+      <button
+        type="button"
+        className="modal-close"
+        onClick={onClose}
+        aria-label="Chiudi finestra"
       >
-        <button
-          type="button"
-          className="modal-close"
-          onClick={onClose}
-          aria-label="Chiudi finestra"
-        >
-          ×
-        </button>
-
-        <div className="modal-content">{children}</div>
-      </div>
-    </div>
+        ×
+      </button>
+      <div className="modal-content">{children}</div>
+    </dialog>
   );
 }

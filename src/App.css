@@ -11,6 +11,9 @@ header {
 }
 
 main {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
   min-height: 50vh;
 }
 
@@ -31,4 +34,12 @@ main {
 .loaded-posts {
   text-align: left;
   font-size: 0.8rem;
+}
+
+.error-block {
+  margin-top: 24px;
+}
+
+.error-block p {
+  margin-bottom: 12px;
 }

@@ -26,8 +26,11 @@
 .form-field label,
 .form-field input,
 .form-field textarea {
+  font-size: 0.725rem;
   width: 100%;
+  text-align: left;
   margin-bottom: 6px;
+  background: transparent;
 }
 
 .post-form-error,

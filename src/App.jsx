@@ -74,7 +74,6 @@ function App() {
   };
 
   const handleShowPostForm = () => {
-    console.log(showPostModal);
 
     if (!showPostModal) setShowModal(true);
   };
@@ -100,7 +99,7 @@ function App() {
 
   if (error) {
     mainContent = (
-      <div>
+      <div className="error-block">
         <p>{error}</p>
         <button type="button" onClick={handleRetry}>
           Riprova
